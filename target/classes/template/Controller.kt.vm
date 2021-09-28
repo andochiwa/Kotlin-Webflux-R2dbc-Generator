@@ -1,0 +1,61 @@
+package ${package}.${moduleName}.controller
+
+import com.github.dto.ResultDto
+import com.github.dto.resultSuccess
+import ${package}.${moduleName}.entity.${className}
+import ${package}.${moduleName}.service.${className}Service
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
+import kotlinx.coroutines.flow.toList
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
+
+/**
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${moduleName}/${pathName}")
+@Api
+class ${className}Controller {
+
+    @Autowired
+    lateinit var ${classname}Service: ${className}Service
+
+    @GetMapping("{id}")
+    @ApiOperation("get")
+    suspend fun getById(@PathVariable("id") id: Long): ResultDto {
+        val ${classname} = ${classname}Service.getById(id)
+        return resultSuccess().put("${classname}", ${classname})
+    }
+
+    @PostMapping
+    @ApiOperation("insert")
+    suspend fun insert(@RequestBody ${classname}: ${className}): ResultDto {
+        ${classname}Service.saveOrUpdate(${classname})
+        return resultSuccess()
+    }
+
+    @PutMapping
+    @ApiOperation("update")
+    suspend fun update(@RequestBody ${classname}: ${className}): ResultDto {
+        ${classname}Service.saveOrUpdate(${classname})
+        return resultSuccess()
+    }
+
+    @DeleteMapping("{id}")
+    @ApiOperation("deleteById")
+    suspend fun deleteById(@PathVariable("id") id: Long): ResultDto {
+        ${classname}Service.deleteById(id)
+        return resultSuccess()
+    }
+
+    @GetMapping
+    @ApiOperation("getAll")
+    suspend fun getAll(): ResultDto {
+        val ${classname}s = ${classname}Service.getAll()
+        return resultSuccess().put("${classname}", ${classname}s.toList())
+    }
+}
